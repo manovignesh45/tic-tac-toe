@@ -36,6 +36,12 @@
         font-size: 18px;
         font-weight: bold;
       }
+
+      .yes-button,
+      .no-button
+       {
+        padding: 10px 20px;
+      }
     </style>
 
 <p class="js-message"></p>
@@ -55,6 +61,10 @@
   </div>
 
   <button class="reset-button js-reset-button">Reset</button>
+
+  <p class="js-reset"></p>
+
+  <div class="js-reset-div"></div>
 
 
 
@@ -134,16 +144,35 @@
     };
 
     function reset() {
-      gameMove = ['', '', '', '', '', '', '', '', ''];
+      const resetElement = document.querySelector('.js-reset')
+      const htmlElement = `<p>Do you really want Reset??</p>
+        <div>
+          <button class="yes-button js-yes-button">Yes</button>
+          <button class="no-button js-no-button">No</button>
+        </div>`
+      resetElement.innerHTML = htmlElement;
 
-      const gridItems = document.querySelectorAll('.grid-item');
-      gridItems.forEach((item) => {
-        item.innerHTML = '';
-      })
+      document.querySelector('.js-yes-button')
+        .addEventListener('click', () => {
+          gameMove = ['', '', '', '', '', '', '', '', ''];
 
-      currentPlayer = 'X';
-      gameActive = true;
-      messageElement.innerHTML = `Player "${currentPlayer}"s Move`;
+          const gridItems = document.querySelectorAll('.grid-item');
+          gridItems.forEach((item) => {
+            item.innerHTML = '';
+          })
+
+          currentPlayer = 'X';
+          gameActive = true;
+          messageElement.innerHTML = `Player "${currentPlayer}"s Move`;
+
+          resetElement.innerHTML = '';
+        });
+
+      document.querySelector('.js-no-button')
+        .addEventListener('click', () => {
+          resetElement.innerHTML = '';
+        })
+
     }
 
 
