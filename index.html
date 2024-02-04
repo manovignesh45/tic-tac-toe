@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tic Tac Toe</title>
-
-    
+    <title>Tic Tac Toe</title> 
   </head>
-
 
   <body>
     <style>
@@ -83,30 +80,27 @@
     
 
     function handleCellClick () {
-      const clickedCell = event.target;
-      const cellIndex = clickedCell.dataset.index;
+        const clickedCell = event.target;
+        const cellIndex = clickedCell.dataset.index;
 
-      
-      if(gameMove[cellIndex] === '' && gameActive) {
-      gameMove[cellIndex] = currentPlayer;
-      clickedCell.innerHTML = currentPlayer;
-      console.log(gameMove)
+        
+        if(gameMove[cellIndex] === '' && gameActive) {
+        gameMove[cellIndex] = currentPlayer;
+        clickedCell.innerHTML = currentPlayer;
+        console.log(gameMove)
 
-      checkWin();
-      checkDraw();
-      if (gameActive) {
-        changePlayer();
+        checkWin();
+        checkDraw();
+        if (gameActive) {
+          changePlayer();
+        };          
       };
-      
-      
-    };
     };
 
     function changePlayer () {
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
       messageElement.innerHTML = `Player "${currentPlayer}"s Move`
     };
-
 
     function checkWin () {
       const winSequence = [
@@ -127,11 +121,10 @@
           // console.log(gameMove[c]);
           messageElement.innerHTML = `The Player "${currentPlayer}" is Win!!`
           gameActive = false;
-        // console.log('Win')
-        
-        }
-      }) 
-    }
+          // console.log('Win')       
+        };
+      });
+    };
 
     function checkDraw () {
       // console.log(!gameMove.includes(''))
@@ -172,7 +165,6 @@
         .addEventListener('click', () => {
           resetElement.innerHTML = '';
         })
-
     }
 
 
