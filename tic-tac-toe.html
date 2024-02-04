@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+
+    
+  </head>
+
+
+  <body>
+    <style>
+      .div-container {
+        font-size: 30px;
+        font: bold;
+        display: grid;
+        grid-template-columns: 80px 80px 80px;
+        grid-template-rows: 80px 80px 80px;
+        margin-top: 15px;
+        column-gap: 5px;
+        row-gap: 5px;
+        
+      }
+  
+      .grid-item { 
+        padding: 20px;
+        /* background-color: red; */
+        border: solid;
+        border-color: black;
+        border-width: 1px;
+        align-items: center;
+      }
+    </style>
+
+<p class="js-message"></p>
+
+  <div class="div-container" onclick="handleCellClick(event)">
+      <div class="grid-item" data-index="0" data-name="mano"></div>
+      <div class="grid-item" data-index="1"></div>
+      <div class="grid-item" data-index="2"></div>
+
+      <div class="grid-item" data-index="3"></div>
+      <div class="grid-item" data-index="4"></div>
+      <div class="grid-item" data-index="5"></div>
+
+      <div class="grid-item" data-index="6"></div>
+      <div class="grid-item" data-index="7"></div>
+      <div class="grid-item" data-index="8"></div>
+  </div>
+
+
+
+  <script>
+    let currentPlayer = 'X';
+    let gameMove = ['', '', '', '', '', '', '', '', ''];
+    const gridContainer = document.querySelector('.div-container')
+    let gameActive = true;
+
+    const messageElement =  document.querySelector('.js-message');
+    
+
+    function handleCellClick () {
+      const clickedCell = event.target;
+      const cellIndex = clickedCell.dataset.index;
+
+      
+      if(gameMove[cellIndex] === '' && gameActive) {
+      gameMove[cellIndex] = currentPlayer;
+      clickedCell.innerHTML = currentPlayer;
+
+      checkWin();
+      checkDraw();
+      if (gameActive) {
+        changePlayer();
+      };
+      
+      
+    };
+    };
+
+    function changePlayer () {
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      messageElement.innerHTML = `Player "${currentPlayer}"s Move`
+    };
+
+
+    function checkWin () {
+      const winSequence = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+      [0, 4, 8], [2, 4, 6]
+      ];
+
+      winSequence.forEach((pattern) => {
+        const [a, b, c] = pattern;
+        // console.log([a, b, c]);
+        // console.log(pattern);
+        // console.log(gameMove);
+        // console.log(gameMove[a])
+        if (gameMove[a] && gameMove[a] === gameMove[b] && gameMove[a] === gameMove[c]) {
+          // console.log(gameMove[a]);
+          // console.log(gameMove[b]);
+          // console.log(gameMove[c]);
+          messageElement.innerHTML = `The Player "${currentPlayer}" is Win!!`
+          gameActive = false;
+        // console.log('Win')
+        
+        }
+      }) 
+    }
+
+    function checkDraw () {
+      // console.log(!gameMove.includes(''))
+      // console.log(gameMove === '');
+      if(!gameMove.includes('') && gameActive) {
+        messageElement.innerHTML = 'Match Draw';
+        console.log('Draw')
+        gameActive = false;
+      }
+    };
+  </script>
+  </body>
+</html>
