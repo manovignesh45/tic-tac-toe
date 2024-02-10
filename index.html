@@ -43,7 +43,7 @@
 
 <p class="js-message"></p>
 
-  <div class="div-container" onclick="handleCellClick(event)">
+  <div class="div-container">
       <div class="grid-item" data-index="0" data-name="mano"></div>
       <div class="grid-item" data-index="1"></div>
       <div class="grid-item" data-index="2"></div>
@@ -66,6 +66,10 @@
 
 
   <script>
+    document.querySelector('.div-container')
+      .addEventListener('click', () => {
+        handleCellClick();
+      });
     document.querySelector('.js-reset-button')
       .addEventListener('click', () => {
         reset();
@@ -73,24 +77,22 @@
 
     let currentPlayer = 'X';
     let gameMove = ['', '', '', '', '', '', '', '', ''];
-    let gridContainer = document.querySelector('.div-container')
+    let gridContainer = document.querySelector('.div-container');
     let gameActive = true;
 
     const messageElement =  document.querySelector('.js-message');
-    
 
     function handleCellClick () {
         const clickedCell = event.target;
         const cellIndex = clickedCell.dataset.index;
-
-        
+  
         if(gameMove[cellIndex] === '' && gameActive) {
         gameMove[cellIndex] = currentPlayer;
         clickedCell.innerHTML = currentPlayer;
-        console.log(gameMove)
 
         checkWin();
         checkDraw();
+
         if (gameActive) {
           changePlayer();
         };          
@@ -111,24 +113,14 @@
 
       winSequence.forEach((pattern) => {
         const [a, b, c] = pattern;
-        // console.log([a, b, c]);
-        // console.log(pattern);
-        // console.log(gameMove);
-        // console.log(gameMove[a])
         if (gameMove[a] && gameMove[a] === gameMove[b] && gameMove[a] === gameMove[c]) {
-          // console.log(gameMove[a]);
-          // console.log(gameMove[b]);
-          // console.log(gameMove[c]);
           messageElement.innerHTML = `The Player "${currentPlayer}" is Win!!`
-          gameActive = false;
-          // console.log('Win')       
+          gameActive = false;     
         };
       });
     };
 
     function checkDraw () {
-      // console.log(!gameMove.includes(''))
-      // console.log(gameMove === '');
       if(!gameMove.includes('') && gameActive) {
         messageElement.innerHTML = 'Match Draw';
         console.log('Draw')
@@ -138,7 +130,7 @@
 
     function reset() {
       const resetElement = document.querySelector('.js-reset')
-      const htmlElement = `<p>Do you really want to Reset??</p>
+      const htmlElement = `<p>Do you really want Reset??</p>
         <div>
           <button class="yes-button js-yes-button">Yes</button>
           <button class="no-button js-no-button">No</button>
